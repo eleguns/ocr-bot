@@ -1,8 +1,13 @@
-from PIL import Image
+import platform
 import config
+import asyncio
+from pytesseract.pytesseract import tesseract_cmd
+from PIL import Image
 from pytesseract import image_to_string as convert
 from pyrogram import Client, filters
 from pyrogram.types import Message
+
+tesseract_path = ''
 
 app = Client(
     name='bot',
@@ -50,3 +55,20 @@ async def extract(c: Client, m:Message):
     except Exception as e :
         print(f'error : {e}')
         await m.reply('an error occurred, please try again or report to the admin')
+
+async def amain():
+    await app.start()
+    await app.idle()
+    await app.stop()
+
+def main():
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(amain())
+    loop.run_forever()
+
+
+if __name__ == '__main__':
+    if platform.system == 'Windows':
+        tesseract_path = input('Enter your tesseract path :')
+        tesseract_cmd = tesseract_path
+    main()
