@@ -1,5 +1,6 @@
-from colorama import Fore
+from colorama import Fore, init
 
+init()
 
 token = input(Fore.YELLOW + 'Enter your token :')
 api_id = int(input(Fore.GREEN + 'Enter your api id :'))
