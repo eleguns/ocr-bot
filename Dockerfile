@@ -1,6 +1,4 @@
-FROM ubuntu:latest
-
-RUN apt install python3.11-dev python3.11-pip
+FROM python:3.11-slim
 
 COPY ./* /app/*
 
