@@ -1,13 +1,9 @@
-import platform
 import config
-import asyncio
 from pytesseract.pytesseract import tesseract_cmd
 from PIL import Image
 from pytesseract import image_to_string as convert
 from pyrogram import Client, filters
 from pyrogram.types import Message
-
-tesseract_path = ''
 
 app = Client(
     name='bot',
@@ -39,6 +35,8 @@ async def extraction(c: Client, m: Message):
 async def join(c: Client, m: Message):
     me = await c.get_me()
     me_id = me.id
+    if m.service:
+        await m.reply(str(m))
     if m.service == 'new_chat_members' and m.new_chat_members[0].id == me_id:
         await c.send_message(m.chat.id, 'Hi I can extract texts from your photo\nReply <code>/extract</code> to your photos to see it!')
 
@@ -56,19 +54,6 @@ async def extract(c: Client, m:Message):
         print(f'error : {e}')
         await m.reply('an error occurred, please try again or report to the admin')
 
-async def amain():
-    await app.start()
-    await app.idle()
-    await app.stop()
-
-def main():
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(amain())
-    loop.run_forever()
-
 
 if __name__ == '__main__':
-    if platform.system == 'Windows':
-        tesseract_path = input('Enter your tesseract path :')
-        tesseract_cmd = tesseract_path
-    main()
+    app.run()
