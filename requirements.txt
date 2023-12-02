@@ -1,2 +1,3 @@
 Pyrogram==2.0.106
 pytesseract==0.3.10
+colorama
